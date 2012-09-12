@@ -1,0 +1,26 @@
+body {
+  /* local images */
+  background-image: url(images/test.gif);
+  background-image: url("images/test.jpg");
+  background-image: url('images/test.png');
+  background-image: url( 'images/test.png' );
+  background-image: url( "images/test.png" );
+
+  /* this will be skipped */
+  background-image: url(images/test.gif); /*Base64:SKIP*/
+  background-image: url(images/test.gif); /* Base64:SKIP */
+  background-image: url(images/test.gif);/* Base64:SKIP */
+
+  /* images after a skip will still work though */
+  background-image: url(images/test.gif);
+
+  /* existing data URI's should not be encoded */
+  background-image: url(data:image/png;base64,lol);
+  background-image: url("data:image/png;base64,lol");
+  background-image: url('data:image/png;base64,lol');
+  background-image: url( 'data:image/png;base64,lol' );
+
+  /* external images */
+  background-image: url(http://www.placehold.it/400x300);
+  background-image: url(http://placehold.it/400x300);
+}

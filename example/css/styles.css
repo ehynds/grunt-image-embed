@@ -1,0 +1,15 @@
+body {
+  /* local images */
+  background-image: url('../images/test.png');
+
+  /* existing base64 images will be skipped */
+  background-image: url('data:image/png;base64,lolol');
+
+  /* skip images using a comment directive */
+  background-image: url(images/test.gif); /*ImageEmbed:skip*/
+
+  /* external images work too */
+  background-image: url('http://www.placehold.it/400x300');
+
+  /* not broken ones though. */
+}
