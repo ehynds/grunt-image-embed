@@ -51,3 +51,8 @@ Specify that an image should be skipped by adding the following comment *after* 
 ## Known Issues
 
 * Only one image per line can be read at the moment, so run this task before minifying your CSS file.
+
+## License
+
+Copyright (c) 2012 Eric Hynds (@erichynds)
+Licensed under the MIT License.
