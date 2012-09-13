@@ -24,17 +24,19 @@ module.exports = function(grunt) {
   var cache = {};
 
   grunt.registerMultiTask("imageEmbed", "Base64 encode stylesheet", function() {
-    var opts = this.data;
+    var opts = this.data.options;
     var src = this.file.src;
     var dest = this.file.dest;
-    var tasks, done, srcFiles;
+    var tasks, done;
 
     if(!src) {
       grunt.fatal("Missing src property.");
+      return;
     }
 
     if(!dest) {
       grunt.fatal("Missing dest property");
+      return;
     }
 
     done = this.async();

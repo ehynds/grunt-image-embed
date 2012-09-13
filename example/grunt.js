@@ -7,14 +7,17 @@ module.exports = function(grunt) {
   grunt.initConfig({
     imageEmbed: {
       dist: {
-        src: [ "css/styles.css" ],
+        src: "css/styles.css",
         dest: "css/output.css",
 
-        // Specify a max image size. Default is 32768 (32kb is IE8's limit).
-        // maxImageSize: 0,
+        options: {
+          // Specify a max image size. Default is 32768 (32kb is IE8's limit).
+          // maxImageSize: 0,
 
-        // Base directory if you use absolute paths in your stylesheet
-        // baseDir: "/Users/ehynds/projects/grunt-image-embed/"
+          // Base directory if you use absolute paths in your stylesheet
+          // baseDir: "/Users/ehynds/projects/grunt-image-embed/"
+        }
+
       }
     }
   });
