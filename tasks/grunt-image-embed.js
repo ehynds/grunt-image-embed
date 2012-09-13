@@ -1,3 +1,11 @@
+/*
+ * Grunt Image Embed
+ * https://github.com/ehynds/grunt-image-embed
+ *
+ * Copyright (c) 2012 Eric Hynds
+ * Licensed under the MIT license.
+ */
+
 module.exports = function(grunt) {
   "use strict";
 
@@ -23,7 +31,7 @@ module.exports = function(grunt) {
   // Cache of already converted images
   var cache = {};
 
-  grunt.registerMultiTask("imageEmbed", "Base64 encode stylesheet", function() {
+  grunt.registerMultiTask("imageEmbed", "Embed images as base64 data URIs inside your stylesheets", function() {
     var opts = this.data.options;
     var src = this.file.src;
     var dest = this.file.dest;
