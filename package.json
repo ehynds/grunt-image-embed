@@ -28,6 +28,6 @@
     "mime" : "1.2.x"
   },
   "keywords" : [
-    "gruntplugin"
+    "gruntplugin", "base64", "data URI", "css", "image"
   ]
 }
