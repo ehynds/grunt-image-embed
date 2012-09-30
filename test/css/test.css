@@ -1,6 +1,6 @@
 body {
   /* local images */
-  background-image: url(images/test.gif);
+  background-image: url(images/test.gif); background-image: url(images/test.gif);
   background-image: url("images/test.jpg");
   background-image: url('images/test.png');
   background-image: url( 'images/test.png' );

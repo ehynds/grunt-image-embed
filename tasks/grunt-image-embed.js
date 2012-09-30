@@ -73,6 +73,7 @@ module.exports = function(grunt) {
      * @param done Function to call once encoding has finished.
      */
     grunt.registerHelper("encode_stylesheet", function(srcFile, opts, done) {
+
         // Shift args if no options object is specified
         if(utils.kindOf(opts) === "function") {
             done = opts;
@@ -90,7 +91,20 @@ module.exports = function(grunt) {
         };
 
         // store css in result
-        var result = "";
+        result = "";
+
+        var on_encode = function(err, resp) {
+            if (err === null) {
+                result += "url('" + resp + "')";
+                if (deleteAfterEncoding) {
+                    grunt.log.writeln("deleting " + loc);
+                    fs.unlinkSync(loc);
+                }
+            }
+            else {
+                result += group[2];
+            }
+        };
 
         while (exec(src)) {
 
@@ -102,7 +116,7 @@ module.exports = function(grunt) {
             // if there is no other url to be processed, then group[1-3] will be undefined
             //    group[4] will hold the entire string
 
-            if (group[4] == undefined)
+            if (group[4] === undefined)
             {
                 result += group[1];
                 img = group[3].trim().replace(rQuotes, "");
@@ -128,19 +142,8 @@ module.exports = function(grunt) {
                             loc = path.resolve(__dirname + img);
                         }
 
-                        grunt.helper("encode_image", loc, opts, function(err, resp) {
-                            if (err === null) {
-                                result += "url('" + resp + "')";
-                                if (deleteAfterEncoding) {
-                                    grunt.log.writeln("deleting " + loc);
-                                    fs.unlinkSync(loc);
-                                }
-                            }
-                            else {
-                                result += group[2];
-                            }
+                        grunt.helper("encode_image", loc, opts, on_encode);
 
-                        });
                     }
                 }
             }
@@ -148,7 +151,6 @@ module.exports = function(grunt) {
                 result += group[4];
             }
         }
-
         done(null, result);
     });
 
@@ -206,7 +208,6 @@ module.exports = function(grunt) {
             if(!fs.existsSync(img)) {
                 grunt.fail.warn(img + " does not exist");
                 complete(null, img, false);
-                return;
             }
 
             grunt.log.writeln("Encoding file: " + img);
