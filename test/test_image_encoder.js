@@ -59,7 +59,6 @@ exports['test image encoding'] = {
             test.done();
         });
     },
-    */
 
     "can encode remote image": function(test) {
         test.expect(1);
@@ -70,6 +69,7 @@ exports['test image encoding'] = {
             test.done();
         });
     },
+     */
 
     "should not touch images that are already encoded": function(test) {
         test.expect(1);
