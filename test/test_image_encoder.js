@@ -63,8 +63,8 @@ exports['test image encoding'] = {
 
     "can encode remote image": function(test) {
         test.expect(1);
-        var input = "http://www.placehold.it/10x10";
-        var output = "data:image/gif;base64,R0lGODdhCgAKAMIAAMzMzJaWlpycnLe3t6Ojo7GxsaqqqsXFxSwAAAAACgAKAAADGgi63P6QidGOEYAAYczS2hEcn1BsgwZcUQskADs=";
+        var input = "http://www.erichynds.com/i/10x10.png";
+        var output = "data:image/png;base64,R0lGODdhCgAKAMIAAMzMzJaWlpycnLe3t6Ojo7GxsaqqqsXFxSwAAAAACgAKAAADGgi63P6QidGOEYAAYczS2hEcn1BsgwZcUQskADs=";
         grunt.helper("encode_image", input, function(err, str) {
             test.equal(str, output);
             test.done();
