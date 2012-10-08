@@ -42,6 +42,15 @@ exports['test css encoding'] = {
     });
   },
 
+  "can encode an external image": function(test) {
+    test.expect(1);
+    var input = __dirname + "/css/test_singleurl_external.css";
+    grunt.helper("encode_stylesheet", input, function(err, str) {
+      test.equal(str, "body { background-image: url('" + encoded_gif + "'); }" + linefeed);
+      test.done();
+    });
+  },
+
   "can encode more than one url on a line": function(test) {
     test.expect(1);
     var input = __dirname + "/css/test_multiurl_oneline.css";
