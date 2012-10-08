@@ -3,11 +3,11 @@ body {
   background-image: url('../images/test.png');
 
   /* existing base64 images will be skipped */
-  background-image: url('data:image/png;base64,lolol');
+  background-image: url('data:image/png;base64,this will not be encoded');
 
   /* skip images using a comment directive */
   background-image: url(../images/test.png); /*ImageEmbed:skip*/
 
   /* external images work too */
-  background-image: url('http://www.placehold.it/400x300');
+  background-image: url('http://erichynds.com/i/10x10.png');
 }
