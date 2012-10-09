@@ -25,6 +25,7 @@
   },
   "dependencies" : {
     "grunt" : "0.3.x",
+    "request" : "~2.11.4",
     "mime" : "1.2.x"
   },
   "keywords" : [

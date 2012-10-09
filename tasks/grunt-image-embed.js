@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     var path = require("path");
     var mime = require("mime");
     var url = require("url");
-    var http = require("http");
+    var request = require("request");
 
     // Grunt utils
     var utils = grunt.utils;
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     var async = utils.async;
 
     // Cache regex's
-    var rImages = /([\s\S]*?)(url\(([^)]+)\))(?!\s*[;,]\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
+    var rImages = /([\s\S]*?)(url\(([^)]+)\))(?!\s*[;,]?\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
     var rExternal = /^http/;
     var rData = /^data:/;
     var rQuotes = /['"]/g;
@@ -196,10 +196,12 @@ module.exports = function(grunt) {
 
         // Already base64 encoded?
         if(rData.test(img)) {
+            console.log("already encoded");
             complete(null, img, false);
 
             // External URL?
         } else if(rExternal.test(img)) {
+            console.log("external url");
             fetchImage(img, complete);
 
             // Local file?
@@ -226,36 +228,24 @@ module.exports = function(grunt) {
      * @param img Remote path, like http://url.to/an/image.png
      * @param done Function to call once done
      */
-    function fetchImage(img, done) {
-        var opts = url.parse(img);
+    function fetchImage(url, done) {
 
-        var req = http.request(opts, function(res) {
-            res.setEncoding("binary");
+        var req = request(url, function(error, response, body) {
 
-            var mime = res.headers["content-type"];
-            var data = "";
+            if (error) {
+                done("Unable to convert " + url + ". Error: " + error.message);
+            }
 
             // Bail if we get anything other than 200
-            if(res.statusCode !== 200) {
-                done("Unable to convert " + img + " because the URL did not return an image. Staus code " + res.statusCode + " received");
+            if (response.statusCode !== 200) {
+                done("Unable to convert " + url + " because the URL did not return an image. Staus code " + response.statusCode + " received");
                 return;
             }
 
-            res.on("data", function(chunk) {
-                data += chunk;
-            });
-
-            res.on("end", function() {
-                data = new Buffer(data, "binary");
-                done(null, encode(mime, data));
-            });
+            console.log(body);
+            done(null, encode(mime, body));
         });
 
-        req.on("error", function(err) {
-            done("Unable to convert " + img + ". Error: " + err.code);
-        });
-
-        req.end();
     }
 
     /**
