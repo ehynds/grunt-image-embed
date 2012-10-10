@@ -29,7 +29,7 @@ exports['test css encoding'] = {
         test.expect(1);
         var input = __dirname + "/css/test_singleurl.css";
         grunt.helper("encode_stylesheet", input, function(err, str) {
-            test.equal(str, "body { /* local images */ background-image: url('" + encoded_testpng + "'); }\r\n");
+            test.equal(str, "body { /* local images */ background-image: url(" + encoded_testpng + "); }\r\n");
             test.done();
         });
     },
@@ -38,7 +38,7 @@ exports['test css encoding'] = {
         test.expect(1);
         var input = __dirname + "/css/test_singleurl_withquotes.css";
         grunt.helper("encode_stylesheet", input, function(err, str) {
-            test.equal(str, "body { /* local images */ background-image: url('" + encoded_testpng + "'); }\r\n");
+            test.equal(str, "body { /* local images */ background-image: url(" + encoded_testpng + "); }\r\n");
             test.done();
         });
     },
@@ -47,7 +47,7 @@ exports['test css encoding'] = {
         test.expect(1);
         var input = __dirname + "/css/test_multiurl_oneline.css";
         grunt.helper("encode_stylesheet", input, function(err, str) {
-            test.equal(str, "body { /* local images */ background-image: url('" + encoded_testpng + "'); background-image: url('" + encoded_testpng + "'); }\r\n");
+            test.equal(str, "body { /* local images */ background-image: url(" + encoded_testpng + "); background-image: url(" + encoded_testpng + "); }\r\n");
             test.done();
         });
     },
@@ -60,7 +60,7 @@ exports['test css encoding'] = {
         //
         var input = __dirname + "/css/sub/test_multiurl_oneline.css";
         grunt.helper("encode_stylesheet", input, function(err, str) {
-            test.equal(str, "body { /* local images */ background-image: url('" + encoded_testpng + "'); background-image: url('" + encoded_testpng + "'); }\r\n");
+            test.equal(str, "body { /* local images */ background-image: url(" + encoded_testpng + "); background-image: url(" + encoded_testpng + "); }\r\n");
             test.done();
         });
     },

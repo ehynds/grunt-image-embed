@@ -25,7 +25,8 @@
   },
   "dependencies" : {
     "grunt" : "0.3.x",
-    "request" : "~2.11.4",
+    "request" : "~2.11",
+    "buffers" : "~0.1.1",
     "mime" : "1.2.x"
   },
   "keywords" : [
