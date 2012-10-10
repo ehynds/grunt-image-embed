@@ -1,13 +1,22 @@
-body {
+.local {
   /* local images */
   background-image: url('../images/test.png');
+}
 
+.existing {
   /* existing base64 images will be skipped */
   background-image: url('data:image/png;base64,this will not be encoded');
+}
 
+.skip {
   /* skip images using a comment directive */
-  background-image: url(../images/test.png); /*ImageEmbed:skip*/
+  background-image: url(images/test.gif); /*ImageEmbed:skip*/
+}
 
+.external {
   /* external images work too */
-  background-image: url('http://erichynds.com/i/10x10.png');
+  background-image: url('https://raw.github.com/ehynds/grunt-image-embed/master/example/images/test.png');
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
 }

@@ -44,7 +44,6 @@ exports['test image encoding'] = {
         });
     },
 
-
     //
     // NOTE -- I don't know how to trap Grunt Warn right now.  Could someone look into it?
     //
@@ -63,8 +62,8 @@ exports['test image encoding'] = {
 
     "can encode remote image": function(test) {
         test.expect(1);
-        var input = "http://www.erichynds.com/i/10x10.png";
-        var output = "data:image/png;base64,R0lGODdhCgAKAMIAAMzMzJaWlpycnLe3t6Ojo7GxsaqqqsXFxSwAAAAACgAKAAADGgi63P6QidGOEYAAYczS2hEcn1BsgwZcUQskADs=";
+        var input = "https://raw.github.com/ehynds/grunt-image-embed/master/example/images/test.png";
+        var output = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIE1hY2ludG9zaCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo2Q0ZDOEMyN0YxM0IxMUUxOTRCM0IzMDk3OTU0RDM0NiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo2Q0ZDOEMyOEYxM0IxMUUxOTRCM0IzMDk3OTU0RDM0NiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjZDRkM4QzI1RjEzQjExRTE5NEIzQjMwOTc5NTREMzQ2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZDRkM4QzI2RjEzQjExRTE5NEIzQjMwOTc5NTREMzQ2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+UmaspwAAAA9JREFUeNpiOHPmDECAAQAEzAJlNBi8xAAAAABJRU5ErkJggg==";
         grunt.helper("encode_image", input, function(err, str) {
             test.equal(str, output);
             test.done();
@@ -79,6 +78,5 @@ exports['test image encoding'] = {
             test.done();
         });
     }
-
 };
 
