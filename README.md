@@ -1,9 +1,13 @@
-This task converts all data found within a stylesheet (those within a `url( ... )` declaration) into base64-encoded data URI strings.  This includes images and fonts.
+# Grunt Image Embed
+
+This task converts all data found within a stylesheet (those within a `url( ... )` declaration) into base64-encoded data URI strings. This includes images and fonts.
+
+Created by Eric Hynds [@erichynds](http://twitter.com/erichynds) with major contributions from [dancingplatypus](https://github.com/dancingplatypus).
 
 ## Features
 
 * Supports both local & remote images.
-* Ability to specify a size limit. Default is 32kb, or IE8's limit.
+* Ability to specify a size limit. Default is 32kb which is IE8's limit.
 * Existing data URIs will be ignored.
 * Skip specific images by specifying a directive comment.
 * Ability to purge images that have been encoded
