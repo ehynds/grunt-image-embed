@@ -205,6 +205,7 @@ module.exports = function(grunt) {
       if(!fs.existsSync(img)) {
         grunt.fail.warn("File " + img + " does not exist");
         complete(null, img, false);
+        return;
       }
 
       grunt.log.writeln("Encoding file: " + img);
