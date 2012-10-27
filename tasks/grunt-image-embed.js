@@ -171,8 +171,8 @@ module.exports = function(grunt) {
 
     var complete = function(err, encoded, cacheable) {
       // Too long?
-      if(encoded && opts.maxImageSize && encoded.length > opts.maxImageSize) {
-        err = img + " -- skipped (gt " + opts.maxImageSize + " bytes)";
+      if(cacheable && encoded && opts.maxImageSize && encoded.length > opts.maxImageSize) {
+        err = "Skipping " + img + " (greater than " + opts.maxImageSize + " bytes)";
       }
 
       // Return the original source if an error occurred
@@ -192,17 +192,18 @@ module.exports = function(grunt) {
 
     // Already base64 encoded?
     if(rData.test(img)) {
-      complete("already encoded", img, false);
+      complete(null, img, false);
 
       // External URL?
     } else if(rExternal.test(img)) {
+      grunt.log.writeln("Encoding file: " + img);
       fetchImage(img, complete);
 
       // Local file?
     } else {
       // Does the image actually exist?
       if(!fs.existsSync(img)) {
-        grunt.fail.warn(img + " does not exist");
+        grunt.fail.warn("File " + img + " does not exist");
         complete(null, img, false);
       }
 
@@ -212,7 +213,7 @@ module.exports = function(grunt) {
       var src = fs.readFileSync(img);
       var type = mime.lookup(img);
       var encoded = encode(type, src);
-      complete(null, encoded);
+      complete(null, encoded, true);
     }
   });
 
@@ -244,7 +245,7 @@ module.exports = function(grunt) {
       }
 
       var contentType = response.headers["content-type"];
-      done(null, encode(contentType, resultBuffer));
+      done(null, encode(contentType, resultBuffer), true);
     }).pipe(imageStream);
   }
 
