@@ -15,13 +15,19 @@ Created by Eric Hynds [@erichynds](http://twitter.com/erichynds) with major cont
 
 ## Getting Started
 
-Install this plugin with: `grunt install grunt-image-embed`
+Install this plugin with the command:
 
-Next, add this line to your project's `grunt.js` file:
+```js
+grunt install grunt-image-embed
+```
 
-`grunt.loadNpmTasks("grunt-image-embed");`
+Next, add this line to your project's grunt file:
 
-Lastly, add the configuration settings to your grunt.js file.
+```js
+grunt.loadNpmTasks("grunt-image-embed");
+```
+
+Lastly, add configuration settings to your grunt.js file (see below).
 
 ## Documentation
 
