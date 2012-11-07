@@ -59,7 +59,7 @@ ImageEmbed can be customized by specifying the following options:
 
 Specify that an image should be skipped by adding the following comment directive *after* the image:
 
-```js
+```css
 background: url(image.gif); /*ImageEmbed:skip*/
 ```
 
