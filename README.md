@@ -63,10 +63,6 @@ Specify that an image should be skipped by adding the following comment directiv
 background: url(image.gif); /*ImageEmbed:skip*/
 ```
 
-## Known Issues
-
-* If you've minify your file before running this task, you've most likely already stripped comments. In this case, `/*ImageEmbed:skip*/` will not work.
-
 ## License
 
 Copyright (c) 2012 Eric Hynds (@erichynds)
