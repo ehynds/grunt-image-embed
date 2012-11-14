@@ -75,6 +75,7 @@ module.exports = function(grunt) {
    * @param done Function to call once encoding has finished.
    */
   grunt.registerHelper("encode_stylesheet", function(srcFile, opts, done) {
+    opts = opts || {};
     // Shift args if no options object is specified
     if(utils.kindOf(opts) === "function") {
       done = opts;
