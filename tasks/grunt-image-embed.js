@@ -115,7 +115,7 @@ module.exports = function(grunt) {
           result = result += cache[img];
         } else {
           // process it and put it into the cache
-          var loc = img.split("?")[0];
+          var loc = img;
 
           // Resolve the image path relative to the CSS file
           if(!rData.test(img) && !rExternal.test(img)) {
