@@ -29,6 +29,7 @@ module.exports = function(grunt) {
   var rExternal = /^http/;
   var rData = /^data:/;
   var rQuotes = /['"]/g;
+  var rParams = /([?#].*)$/g;
 
   // Cache of already converted images
   var cache = {};
@@ -103,7 +104,10 @@ module.exports = function(grunt) {
 
       if(group[4] == null) {
         result += group[1];
-        img = group[3].trim().replace(rQuotes, "");
+
+        img = group[3].trim()
+          .replace(rQuotes, "")
+          .replace(rParams, ""); // remove query string/hash parmams in the filename, like foo.png?bar or foo.png#bar
 
         // see if this img was already processed before...
         if(cache[img]) {
@@ -111,7 +115,7 @@ module.exports = function(grunt) {
           result = result += cache[img];
         } else {
           // process it and put it into the cache
-          var loc = img;
+          var loc = img.split("?")[0];
 
           // Resolve the image path relative to the CSS file
           if(!rData.test(img) && !rExternal.test(img)) {

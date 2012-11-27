@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'tar_bkregular';
+  src: url('fonts/chunkfive-webfont.eot');
+  src: url('fonts/chunkfive-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fonts/chunkfive-webfont.woff') format('woff'),
+       url('fonts/chunkfive-webfont.ttf') format('truetype'),
+       url('fonts/chunkfive-webfont.svg#tar_bkregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
