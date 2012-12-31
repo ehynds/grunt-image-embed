@@ -6,8 +6,8 @@ module.exports = function(grunt) {
       all: ["test/test_image_encoder.js", "test/test_css_encoder.js"]
     },
     watch: {
-      files: "<%= jshint.all.files %>",
-      tasks: "default"
+      files: "<%= jshint.tasks.src %>",
+      tasks: ["jshint:tasks", "nodeunit"]
     },
     jshint: {
       options: {
@@ -24,7 +24,13 @@ module.exports = function(grunt) {
         node: true,
         es5: true
       },
-      all: ["GruntFile.js", "tasks/**/*.js", "test/**/*.js"]
+      tasks: {
+        src: ["tasks/**/*.js"]
+      },
+      general: {
+        options: { strict: false },
+        src: ["GruntFile.js", "test/**/*.js"]
+      }
     }
   });
 
