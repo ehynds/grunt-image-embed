@@ -2,14 +2,11 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    test: {
-      files: [ "test/test_image_encoder.js", "test/test_css_encoder.js" ]
-    },
-    lint: {
-      files: ["grunt.js", "tasks/**/*.js", "test/**/*.js"]
+    nodeunit: {
+      all: ["test/test_image_encoder.js", "test/test_css_encoder.js"]
     },
     watch: {
-      files: "<config:lint.files>",
+      files: "<%= jshint.all.files %>",
       tasks: "default"
     },
     jshint: {
@@ -27,11 +24,14 @@ module.exports = function(grunt) {
         node: true,
         es5: true
       },
-      globals: {}
+      all: ["GruntFile.js", "tasks/**/*.js", "test/**/*.js"]
     }
   });
 
   grunt.loadTasks("tasks");
+  grunt.loadNpmTasks("grunt-contrib-nodeunit");
+  grunt.loadNpmTasks("grunt-contrib-jshint");
+  grunt.loadNpmTasks("grunt-contrib-watch");
 
-  grunt.registerTask("default", "lint test");
+  grunt.registerTask("default", ["lint", "nodeunit"]);
 };
