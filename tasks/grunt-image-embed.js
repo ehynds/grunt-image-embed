@@ -9,7 +9,7 @@
 // Internal libs
 var grunt_encode = require( "./lib/encode" );
 
-exports = function(grunt) {
+module.exports = function(grunt) {
   "use strict";
 
   // Grunt lib init
