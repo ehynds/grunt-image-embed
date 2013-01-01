@@ -36,9 +36,6 @@ exports.init = function(grunt) {
   var _ = utils._;
   var async = utils.async;
 
-  // Cache of already converted images
-  var cache = {};
-
   /**
    * Takes a CSS file as input, goes through it line by line, and base64
    * encodes any images it finds.
@@ -108,9 +105,14 @@ exports.init = function(grunt) {
             }
           }
 
-          exports.image(loc, opts, function(err, resp) {
+          exports.image(loc, opts, function(err, resp, cacheable) {
             if (err == null) {
-              result += "url(" + resp + ")";
+              var url = "url(" + resp + ")";
+              result += url;
+
+              if(cacheable !== false) {
+                cache[img] = url;
+              }
 
               if(deleteAfterEncoding && is_local_file) {
                 grunt.log.writeln("deleting " + loc);
@@ -163,14 +165,10 @@ exports.init = function(grunt) {
       // Return the original source if an error occurred
       if(err) {
         grunt.log.error(err);
-        done(err, img);
+        done(err, img, false);
 
         // Otherwise cache the processed image and return it
       } else {
-        if(cacheable !== false) {
-          cache[img] = img;
-        }
-
         done(null, encoded, cacheable);
       }
     };
@@ -188,7 +186,7 @@ exports.init = function(grunt) {
           type = mime.lookup(img);
           encoded = exports.getDataURI(type, src);
         }
-        done(err, encoded, cacheable);
+        complete(err, encoded, cacheable);
       } );
 
       // Local file?
