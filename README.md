@@ -18,7 +18,7 @@ Created by Eric Hynds [@erichynds](http://twitter.com/erichynds) with major cont
 Install this plugin with the command:
 
 ```js
-grunt install grunt-image-embed
+npm install grunt-image-embed
 ```
 
 Next, add this line to your project's grunt file:
