@@ -41,7 +41,9 @@ grunt.initConfig({
     dist: {
       src: [ "css/styles.css" ],
       dest: "css/output.css",
-      deleteAfterEncoding : false
+      options: {
+        deleteAfterEncoding : false
+      }
     }
   }
 });
