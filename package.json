@@ -18,21 +18,21 @@
   "main" : "grunt.js",
   "bin" : "bin/grunt-image-embed",
   "engines" : {
-    "node" : "*"
+    "node" : ">= 0.8.0"
   },
   "scripts" : {
     "test" : "grunt test"
   },
   "dependencies" : {
-    "grunt": "0.4.x",
     "request" : "~2.11",
     "buffers" : "~0.1.1",
     "mime" : "1.2.x"
   },
   "devDependencies": {
+    "grunt": "0.4.x",
     "grunt-contrib-watch": "0.2.x",
-    "grunt-contrib-jshint": "~0.1.0",
-    "grunt-contrib-nodeunit": "~0.1.1"
+    "grunt-contrib-jshint": "0.1.x",
+    "grunt-contrib-nodeunit": "0.1.x"
   },
   "keywords" : [
     "gruntplugin", "base64", "data URI", "css", "image"
