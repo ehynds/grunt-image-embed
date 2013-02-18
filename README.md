@@ -65,7 +65,11 @@ Specify that an image should be skipped by adding the following comment directiv
 background: url(image.gif); /*ImageEmbed:skip*/
 ```
 
+## Compatibility
+
+Version >= 0.3.0 of this plugin is compatible with Grunt 0.4.x. Versions 0.0.1 through 0.2.0 are only compatible with Grunt 0.3.x.
+
 ## License
 
-Copyright (c) 2012 Eric Hynds (@erichynds)
+Copyright (c) 2013 Eric Hynds (@erichynds)
 Licensed under the MIT License.
