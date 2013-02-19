@@ -96,7 +96,7 @@ exports.init = function(grunt) {
             // local file system.. fix up the path
             loc = img.charAt(0) === "/" ?
               (opts.baseDir || "") + loc :
-              path.join(path.dirname(srcFile), img);
+              path.join(path.dirname(srcFile),  (opts.baseDir || "") + img);
 
             // If that didn't work, try finding the image relative to
             // the current file instead.
