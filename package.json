@@ -1,7 +1,7 @@
 {
   "name" : "grunt-image-embed",
   "description" : "Grunt task for embedding images as base64 data URIs inside your stylesheets.",
-  "version" : "0.3.0",
+  "version" : "0.3.1",
   "homepage" : "",
   "author" : {
     "name" : "Eric Hynds",
