@@ -8,6 +8,7 @@
 
 // External libs
 var path = require('path');
+var fs = require("fs");
 
 // Internal libs
 var grunt_encode = require("./lib/encode");
@@ -70,6 +71,13 @@ module.exports = function (grunt) {
             grunt.log.writeln('File "' + outputPath + '" created.');
           });
         }
+
+        encode.filesToDelete.forEach(function (file) {
+          if (grunt.file.isFile(file)) {
+            grunt.log.writeln("deleting " + file);
+            fs.unlinkSync(file);
+          }
+        });
 
         done();
       });
