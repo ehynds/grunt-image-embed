@@ -16,7 +16,8 @@ var grunt_fetch = require("./fetch");
 
 // Cache regex's
 var rImages = /([\s\S]*?)(url\(([^)]+)\))(?!\s*[;,]?\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
-var rExternal = /^http/;
+var rExternal = /^(http|https|\/\/)/;
+var rSchemeless = /^\/\//;
 var rData = /^data:/;
 var rQuotes = /['"]/g;
 var rParams = /([?#].*)$/g;
@@ -103,6 +104,11 @@ exports.init = function(grunt) {
             if(!fs.existsSync(loc)) {
               loc = path.resolve(__dirname + img);
             }
+          }
+
+          // Test for scheme less URLs => "//example.com/image.png"
+          if (!is_local_file && rSchemeless.test(loc)) {
+            loc = 'http:' + loc;
           }
 
           exports.image(loc, opts, function(err, resp, cacheable) {
