@@ -158,9 +158,10 @@ exports.init = function(grunt) {
     }
 
     // Set default, helper-specific options
-    opts = _.extend({
-      maxImageSize: 32768
-    }, opts);
+    opts = Object.create(opts);
+    if(opts.maxImageSize === undefined){
+      opts.maxImageSize = 32768;
+    }
 
     var complete = function(err, encoded, cacheable) {
       // Too long?
