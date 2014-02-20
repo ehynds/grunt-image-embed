@@ -87,6 +87,24 @@ exports['test css encoding'] = {
     });
   },
 
+  "will skip declarations with \"/*ImageEmbed:skip*/\" appended as comment": function(test) {
+    var extensions = ['eot', 'eot?#iefix', 'woff', 'ttf', 'svg'];
+
+    test.expect(extensions.length + 1);
+
+    var input = __dirname + "/css/test_fontface_skip.css";
+
+    encode.stylesheet(input, function(err, str) {
+      // Assure none of the URL's have been replaced
+      extensions.forEach(function(extension) {
+        test.notEqual(str.indexOf('chunkfive-webfont.' + extension), -1);
+      });
+      // Assure the regular expression isn't too greedy:
+      test.equal(str.indexOf('test.gif'), -1);
+      test.done();
+    });
+  },
+
   "fonts": function(test) {
     test.expect(1);
     var input = __dirname + "/css/test_fonts.css";
