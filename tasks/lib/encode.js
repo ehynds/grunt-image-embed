@@ -15,7 +15,7 @@ var mime = require("mime");
 var grunt_fetch = require("./fetch");
 
 // Cache regex's
-var rImages = /([\s\S]*?)(url\(([^)]+)\))(?!\s*[;,]?\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
+var rImages = /([\s\S]*?)(url\(([^)]+)\))(?![^;]*;\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
 var rExternal = /^(http|https|\/\/)/;
 var rSchemeless = /^\/\//;
 var rData = /^data:/;
@@ -74,7 +74,6 @@ exports.init = function(grunt) {
       //    group[4] will be undefined
       // if there is no other url to be processed, then group[1-3] will be undefined
       //    group[4] will hold the entire string
-
       if(group[4] == null) {
         result += group[1];
 
