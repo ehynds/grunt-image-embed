@@ -8,15 +8,13 @@
 
 // Internal libs
 var grunt_encode = require("./lib/encode");
+var async = require("async");
 
 module.exports = function(grunt) {
   "use strict";
 
   // Grunt lib init
   var encode = grunt_encode.init(grunt);
-
-  // Grunt utils
-  var async = grunt.util.async;
 
   grunt.registerMultiTask("imageEmbed", "Embed images as base64 data URIs inside your stylesheets", function() {
     var opts = this.options();
