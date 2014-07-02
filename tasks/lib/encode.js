@@ -37,6 +37,8 @@ exports.init = function(grunt) {
   var _ = utils._;
   var async = utils.async;
 
+  // storage for files what must be deleted after processing
+  exports.filesToDelete = [];
   /**
    * Takes a CSS file as input, goes through it line by line, and base64
    * encodes any images it finds.
@@ -120,8 +122,7 @@ exports.init = function(grunt) {
               }
 
               if(deleteAfterEncoding && is_local_file) {
-                grunt.log.writeln("deleting " + loc);
-                fs.unlinkSync(loc);
+                exports.filesToDelete.push(loc);
               }
             } else {
               result += group[2];
