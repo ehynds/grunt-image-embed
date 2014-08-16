@@ -15,7 +15,7 @@ var mime = require("mime");
 var grunt_fetch = require("./fetch");
 
 // Cache regex's
-var rImages = /([\s\S]*?)(url\(([^)]+)\))(?![^;]*;\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
+var rImages = /([\s\S]*?)(url\(([^)]+\.(jpg|jpeg|jpe|gif|png))\))(?![^;]*;\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
 var rExternal = /^(http|https|\/\/)/;
 var rSchemeless = /^\/\//;
 var rData = /^data:/;
@@ -71,10 +71,11 @@ exports.init = function(grunt) {
       //    group[1] will hold everything up to the url declaration
       //    group[2] will hold the complete url declaration (useful if no encoding will take place)
       //    group[3] will hold the contents of the url declaration
-      //    group[4] will be undefined
+      //    group[4] will hold extension
+      //    group[5] will be undefined
       // if there is no other url to be processed, then group[1-3] will be undefined
       //    group[4] will hold the entire string
-      if(group[4] == null) {
+      if(group[5] == null) {
         result += group[1];
 
         img = group[3].trim()
@@ -131,7 +132,7 @@ exports.init = function(grunt) {
           });
         }
       } else {
-        result += group[4];
+        result += group[5];
         complete();
       }
     },
