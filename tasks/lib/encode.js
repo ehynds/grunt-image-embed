@@ -88,8 +88,6 @@ exports.init = function(grunt) {
           .replace(rQuotes, "")
           .replace(rParams, ""); // remove query string/hash parmams in the filename, like foo.png?bar or foo.png#bar
 
-        console.log('img:', img);
-
         // see if this img was already processed before...
         if(cache[img]) {
           grunt.log.error("The image " + img + " has already been encoded elsewhere in your stylesheet. I'm going to do it again, but it's going to make your stylesheet a lot larger than it needs to be.");
@@ -134,6 +132,9 @@ exports.init = function(grunt) {
             complete();
           });
         }
+      } else if (group[4] === undefined && !process) {
+        result += group[1];
+        complete();
       } else {
         result += group[4];
         complete();
