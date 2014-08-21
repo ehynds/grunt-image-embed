@@ -133,7 +133,7 @@ exports.init = function(grunt) {
           });
         }
       } else if (group[4] === undefined && !process) {
-        result += group[1];
+        result += group[1] + group[2];
         complete();
       } else {
         result += group[4];
