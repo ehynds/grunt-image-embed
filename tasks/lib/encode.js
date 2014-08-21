@@ -178,38 +178,62 @@ exports.init = function(grunt) {
       }
     };
 
-    // Already base64 encoded?
-    if(rData.test(img)) {
-      complete(null, img, false);
-
-      // External URL?
-    } else if(rExternal.test(img)) {
-      grunt.log.writeln("Encoding file: " + img);
-      fetch.image(img, function(err, src, cacheable) {
-        var encoded, type;
-        if (err == null) {
-          type = mime.lookup(img);
-          encoded = exports.getDataURI(type, src);
-        }
-        complete(err, encoded, cacheable);
-      } );
-
-      // Local file?
-    } else {
-      // Does the image actually exist?
-      if(!fs.existsSync(img)) {
-        grunt.fail.warn("File " + img + " does not exist");
+    var process = function () {
+      // Already base64 encoded?
+      if(rData.test(img)) {
         complete(null, img, false);
-        return;
+
+        // External URL?
+      } else if(rExternal.test(img)) {
+        grunt.log.writeln("Encoding file: " + img);
+        fetch.image(img, function(err, src, cacheable) {
+          var encoded, type;
+          if (err == null) {
+            type = mime.lookup(img);
+            encoded = exports.getDataURI(type, src);
+          }
+          complete(err, encoded, cacheable);
+        } );
+
+        // Local file?
+      } else {
+        // Does the image actually exist?
+        if(!fs.existsSync(img)) {
+          grunt.fail.warn("File " + img + " does not exist");
+          complete(null, img, false);
+          return;
+        }
+
+        grunt.log.writeln("Encoding file: " + img);
+
+        // Read the file in and convert it.
+        var src = fs.readFileSync(img);
+        var type = mime.lookup(img);
+        var encoded = exports.getDataURI(type, src);
+        complete(null, encoded, true);
       }
+    };
 
-      grunt.log.writeln("Encoding file: " + img);
-
-      // Read the file in and convert it.
-      var src = fs.readFileSync(img);
-      var type = mime.lookup(img);
-      var encoded = exports.getDataURI(type, src);
-      complete(null, encoded, true);
+    // ask optional callback what to do with the image
+    // return values
+    //  false: do not encode
+    //  true: process images as ususal
+    //  String: replace the image with the returned string
+    if (opts.preEncodeCallback) {
+      var rv = opts.preEncodeCallback(img);
+      if (rv === false) {
+         // do not encode
+         complete("Image encoding is declined by callback", img, false);
+      } else if (rv === true) {
+        // continue as usual
+        process();
+      } else {
+        // replace the image with the callback-provided value
+        complete(null, rv, false);	// false == non-cacheable
+      }
+    } else {
+      // no callback
+      process();
     }
   };
 
