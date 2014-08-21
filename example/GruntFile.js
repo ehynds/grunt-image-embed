@@ -16,6 +16,12 @@ module.exports = function(grunt) {
 
           // Base directory if you use absolute paths in your stylesheet
           // baseDir: "/Users/ehynds/projects/grunt-image-embed/"
+
+          // Include certain files types based on a regex
+          // regexInclude: /\.(jpg|png|gif|jpeg)/gi
+
+          // Exclude certain file types based on a regex
+          // regexExclude: /\.(eot|woff|ttf|svg)/gi
         }
 
       }
