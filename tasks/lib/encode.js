@@ -15,9 +15,8 @@ var mime = require("mime");
 var grunt_fetch = require("./fetch");
 
 // Cache regex's
-var rImages = /([\s\S]*?)(url\(([^)]+)\))(?![^;]*;\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
-var rExternal = /^(http|https|\/\/)/;
-var rSchemeless = /^\/\//;
+var rImages = /([\s\S]*?)(url\(([^)]+)\))(?!\s*[;,]?\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
+var rExternal = /^http/;
 var rData = /^data:/;
 var rQuotes = /['"]/g;
 var rParams = /([?#].*)$/g;
@@ -48,6 +47,10 @@ exports.init = function(grunt) {
   exports.stylesheet = function(srcFile, opts, done) {
     opts = opts || {};
 
+    // Regular expressions to check inclusion or exclusion of embedded files
+    var rInclude = opts.regexInclude || /.*/g;
+    var rExclude = opts.regexExclude || /$^/g;
+
     // Cache of already converted images
     var cache = {};
 
@@ -74,7 +77,11 @@ exports.init = function(grunt) {
       //    group[4] will be undefined
       // if there is no other url to be processed, then group[1-3] will be undefined
       //    group[4] will hold the entire string
-      if(group[4] == null) {
+
+      // Will skip processing if file is not included or is excluded
+      var process = group[3] && (group[3].match(rInclude) !== null || group[3].match(rExclude) === null);
+
+      if(group[4] == null && process) {
         result += group[1];
 
         img = group[3].trim()
@@ -105,11 +112,6 @@ exports.init = function(grunt) {
             }
           }
 
-          // Test for scheme less URLs => "//example.com/image.png"
-          if (!is_local_file && rSchemeless.test(loc)) {
-            loc = 'http:' + loc;
-          }
-
           exports.image(loc, opts, function(err, resp, cacheable) {
             if (err == null) {
               var url = "url(" + resp + ")";
@@ -130,6 +132,9 @@ exports.init = function(grunt) {
             complete();
           });
         }
+      } else if (group[4] === undefined && !process) {
+        result += group[1] + group[2];
+        complete();
       } else {
         result += group[4];
         complete();
