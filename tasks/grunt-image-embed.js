@@ -21,6 +21,8 @@ module.exports = function(grunt) {
   grunt.registerMultiTask("imageEmbed", "Embed images as base64 data URIs inside your stylesheets", function() {
     var opts = this.options();
     var done = this.async();
+    var filesCount = this.files.length;
+    var doneCount = 0;
 
     // Process each src file
     this.files.forEach(function(file) {
@@ -37,7 +39,10 @@ module.exports = function(grunt) {
       async.parallel(tasks, function(err, output) {
         grunt.file.write(dest, output);
         grunt.log.writeln('File "' + dest + '" created.');
-        done();
+        // call done() exactly once, after all files are processed
+        if (++doneCount >= filesCount) {
+            done();
+        }
       });
     });
   });
