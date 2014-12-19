@@ -55,9 +55,16 @@ grunt.initConfig({
 ImageEmbed can be customized by specifying the following options:
 
 * `maxImageSize`: The maximum size of the base64 string in bytes. This defaults to `32768`, or IE8's limit. Set this to `0` to remove the limit and allow any size string.
+
 * `baseDir`: If you have absolute image paths in your stylesheet, the path specified in this option will be used as the base directory.
+
 * `deleteAfterEncoding`: Set this to true to delete images after they've been encoded. You'll want to do this in a staging area, and not in your source directories.  Be careful.
-* `preEncodeCallback`: function that takes full path to the image to be encoded and returns either `true` (proceeed with default encoding), `false` (abort the encoding, fail with error) or String, which will be used as the result of the encoding
+
+* `preEncodeCallback`: function that takes full path to the image to be encoded and returns either `true` (proceeed with default encoding), `false` (abort the encoding, fail with error) or String, which will be used as the result of the encoding.
+
+* `regexInclude` - Regular expression testing against file types to include. Defaults to all (`/.*/g`). To only include images, you might set this to `/\.(jpg|png|gif|jpeg)/gi`.
+
+* `regexExclude` - Regular expression testing against file types to exclude. Defaults to none (``/$^/g`). To exclude fonts for example, you might set this to `/\.(eot|woff|ttf|svg)/gi`.
 
 ### Skipping Images
 
