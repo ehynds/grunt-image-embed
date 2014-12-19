@@ -17,6 +17,7 @@ var grunt_fetch = require("./fetch");
 // Cache regex's
 var rImages = /([\s\S]*?)(url\(([^)]+)\))(?!\s*[;,]?\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
 var rExternal = /^http/;
+var rSchemeless = /^\/\//;
 var rData = /^data:/;
 var rQuotes = /['"]/g;
 var rParams = /([?#].*)$/g;
@@ -95,11 +96,11 @@ exports.init = function(grunt) {
           complete();
         } else {
           // process it and put it into the cache
-          var loc = img,
-            is_local_file = !rData.test(img) && !rExternal.test(img);
+          var loc = img;
+          var isLocalFile = !rData.test(img) && !rExternal.test(img) && !rSchemeless.test(img);
 
           // Resolve the image path relative to the CSS file
-          if(is_local_file) {
+          if(isLocalFile) {
             // local file system.. fix up the path
             loc = img.charAt(0) === "/" ?
               (opts.baseDir || "") + loc :
@@ -112,6 +113,11 @@ exports.init = function(grunt) {
             }
           }
 
+           // Test for scheme less URLs => "//example.com/image.png"		
+          if(!isLocalFile && rSchemeless.test(loc)) {
+            loc = 'http:' + loc;
+          }
+
           exports.image(loc, opts, function(err, resp, cacheable) {
             if (err == null) {
               var url = "url(" + resp + ")";
@@ -121,8 +127,8 @@ exports.init = function(grunt) {
                 cache[img] = url;
               }
 
-              if(deleteAfterEncoding && is_local_file) {
-                grunt.log.writeln("deleting " + loc);
+              if(deleteAfterEncoding && isLocalFile) {
+                grunt.log.writeln("Deleting file " + loc);
                 fs.unlinkSync(loc);
               }
             } else {
