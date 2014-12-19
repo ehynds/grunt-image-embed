@@ -1,5 +1,4 @@
-var grunt = require("grunt");
-var encode = require("../tasks/lib/encode").init(grunt);
+var encode = require("../tasks/lib/encode");
 
 /*
  ======== A Handy Little Nodeunit Reference ========
@@ -38,7 +37,7 @@ exports['test image encoding'] = {
     "on success err should be null": function(test) {
         test.expect(1);
         var input = __dirname + "/css/images/test.gif";
-        encode.image(input, function(err, str) {
+        encode.image(input, function(err) {
             test.equal(err, null);
             test.done();
         });

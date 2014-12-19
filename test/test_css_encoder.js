@@ -1,6 +1,6 @@
 var grunt = require("grunt");
 var path = require("path");
-var encode = require("../tasks/lib/encode").init(grunt);
+var encode = require("../tasks/lib/encode");
 var fixtures = path.join(__dirname, "css");
 
 var linefeed = grunt.util.linefeed;

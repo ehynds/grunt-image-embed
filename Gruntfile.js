@@ -21,8 +21,8 @@ module.exports = function(grunt) {
         undef: true,
         boss: true,
         eqnull: true,
-        node: true,
-        es5: true
+        unused: true,
+        node: true
       },
       tasks: {
         src: ["tasks/**/*.js"]

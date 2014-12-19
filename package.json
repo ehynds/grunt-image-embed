@@ -3,6 +3,8 @@
   "description" : "Grunt task for embedding images as base64 data URIs inside your stylesheets.",
   "version" : "0.3.2",
   "homepage" : "",
+  "main" : "grunt.js",
+  "bin" : "bin/grunt-image-embed",
   "author" : {
     "name" : "Eric Hynds",
     "email" : "ehynds@gmail.com",
@@ -15,24 +17,22 @@
   "bugs" : {
     "url" : "https://github.com/ehynds/grunt-image-embed/issues"
   },
-  "main" : "grunt.js",
-  "bin" : "bin/grunt-image-embed",
   "engines" : {
-    "node" : ">= 0.8.0"
+    "node" : ">= 0.10.0"
   },
   "scripts" : {
     "test" : "grunt test"
   },
   "dependencies" : {
-    "request" : "~2.11",
+    "request" : "~2.51.1",
     "buffers" : "~0.1.1",
     "mime" : "1.2.x"
   },
   "devDependencies": {
-    "grunt": "0.4.x",
-    "grunt-contrib-watch": "0.2.x",
-    "grunt-contrib-jshint": "0.1.x",
-    "grunt-contrib-nodeunit": "0.1.x"
+    "grunt": "~0.4.5",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1"
   },
   "keywords" : [
     "gruntplugin", "base64", "data URI", "css", "image"

@@ -2,52 +2,44 @@
  * Grunt Image Embed
  * https://github.com/ehynds/grunt-image-embed
  *
- * Copyright (c) 2012 Eric Hynds
+ * Copyright (c) 2014 Eric Hynds
  * Licensed under the MIT license.
  */
+'use strict';
 
-// Node libs
-var url = require("url");
-var request = require("request");
-var stream = require("stream");
-var buffers = require("buffers");
+var request = require('request');
+var stream = require('stream');
+var buffers = require('buffers');
 
-// Grunt export wrapper
-exports.init = function(grunt) {
-  "use strict";
+/**
+  * Fetch a remote image.
+  * @param {string} url - Remote path, like http://url.to/an/image.png
+  * @param {function} done - Function to call once done with signature (err, Buffer, cacheable?)
+  */
+module.exports.image = function(url, done) {
+  var buffList = buffers();
+  var imageStream = new stream.Stream();
+  var resultBuffer;
 
-  var exports = {};
-
-  /**
-   * Fetches a remote image.
-   *
-   * @param img Remote path, like http://url.to/an/image.png
-   * @param done Function to call once done
-   */
-  exports.image = function(url, done) {
-    var resultBuffer;
-    var buffList = buffers();
-    var imageStream = new stream.Stream();
-
-    imageStream.writable = true;
-    imageStream.write = function(data) { buffList.push(new Buffer(data)); };
-    imageStream.end = function() { resultBuffer = buffList.toBuffer(); };
-
-    request(url, function(error, response, body) {
-      if(error) {
-        done("Unable to get " + url + ". Error: " + error.message);
-        return;
-      }
-
-      // Bail if we get anything other than 200
-      if(response.statusCode !== 200) {
-        done("Unable to get " + url + " because the URL did not return an image. Status code " + response.statusCode + " received");
-        return;
-      }
-
-      done(null, resultBuffer, true);
-    }).pipe(imageStream);
+  imageStream.writable = true;
+  imageStream.write = function(data) {
+    buffList.push(new Buffer(data));
   };
 
-  return exports;
+  imageStream.end = function() {
+    resultBuffer = buffList.toBuffer();
+  };
+
+  request(url, function(err, response) {
+    if(err) {
+      return done(new Error('Unable to get ' + url + '. Error: ' + err.message));
+    }
+
+    // Bail if we get anything other than 200 status code
+    if(response.statusCode !== 200) {
+      return done(new Error('Unable to get ' + url + ' because the URL did not return an image. Status code ' + response.statusCode + ' received'));
+    }
+
+    done(null, resultBuffer, true);
+  }).pipe(imageStream);
 };

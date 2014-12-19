@@ -5,20 +5,12 @@
  * Copyright (c) 2013 Eric Hynds
  * Licensed under the MIT license.
  */
-
-// Internal libs
-var grunt_encode = require("./lib/encode");
+'use strict';
 
 module.exports = function(grunt) {
-  "use strict";
+  var encode = require('./lib/encode');
 
-  // Grunt lib init
-  var encode = grunt_encode.init(grunt);
-
-  // Grunt utils
-  var async = grunt.util.async;
-
-  grunt.registerMultiTask("imageEmbed", "Embed images as base64 data URIs inside your stylesheets", function() {
+  grunt.registerMultiTask('imageEmbed', 'Embed images as base64 data URIs inside your stylesheets', function() {
     var opts = this.options();
     var done = this.async();
     var filesCount = this.files.length;
@@ -36,12 +28,13 @@ module.exports = function(grunt) {
       });
 
       // Once all files have been processed write them out.
-      async.parallel(tasks, function(err, output) {
+      grunt.util.async.parallel(tasks, function(err, output) {
         grunt.file.write(dest, output);
         grunt.log.writeln('File "' + dest + '" created.');
+
         // call done() exactly once, after all files are processed
-        if (++doneCount >= filesCount) {
-            done();
+        if(++doneCount >= filesCount) {
+          done();
         }
       });
     });
