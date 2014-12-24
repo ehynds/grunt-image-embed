@@ -15,29 +15,33 @@ module.exports = function(grunt) {
     var done = this.async();
     var filesCount = this.files.length;
     var doneCount = 0;
-
+    
+    if (filesCount > 0) {
     // Process each src file
-    this.files.forEach(function(file) {
-      var dest = file.dest;
-      var tasks;
-
-      tasks = file.src.map(function(srcFile) {
-        return function(callback) {
-          encode.stylesheet(srcFile, opts, callback);
-        };
+      this.files.forEach(function(file) {
+        var dest = file.dest;
+        var tasks;
+  
+        tasks = file.src.map(function(srcFile) {
+          return function(callback) {
+            encode.stylesheet(srcFile, opts, callback);
+          };
+        });
+  
+        // Once all files have been processed write them out.
+        grunt.util.async.parallel(tasks, function(err, output) {
+          grunt.file.write(dest, output);
+          grunt.log.writeln('File "' + dest + '" created.');
+  
+          // call done() exactly once, after all files are processed
+          if(++doneCount >= filesCount) {
+            done();
+          }
+        });
       });
-
-      // Once all files have been processed write them out.
-      grunt.util.async.parallel(tasks, function(err, output) {
-        grunt.file.write(dest, output);
-        grunt.log.writeln('File "' + dest + '" created.');
-
-        // call done() exactly once, after all files are processed
-        if(++doneCount >= filesCount) {
-          done();
-        }
-      });
-    });
+      } else {
+        done();
+      };
   });
 
 };
