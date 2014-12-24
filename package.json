@@ -24,7 +24,7 @@
     "test" : "grunt test"
   },
   "dependencies" : {
-    "request" : "~2.51.1",
+    "request" : "~2.51.0",
     "buffers" : "~0.1.1",
     "mime" : "1.2.x"
   },
