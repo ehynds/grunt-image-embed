@@ -15,33 +15,39 @@ module.exports = function(grunt) {
     var done = this.async();
     var filesCount = this.files.length;
     var doneCount = 0;
-    
-    if (filesCount > 0) {
+
+    if (filesCount === 0) {
+      grunt.log.warn('No files defined');
+      return done();
+    }
+
     // Process each src file
-      this.files.forEach(function(file) {
-        var dest = file.dest;
-        var tasks;
-  
-        tasks = file.src.map(function(srcFile) {
-          return function(callback) {
-            encode.stylesheet(srcFile, opts, callback);
-          };
-        });
-  
-        // Once all files have been processed write them out.
-        grunt.util.async.parallel(tasks, function(err, output) {
-          grunt.file.write(dest, output);
-          grunt.log.writeln('File "' + dest + '" created.');
-  
-          // call done() exactly once, after all files are processed
-          if(++doneCount >= filesCount) {
-            done();
-          }
-        });
+    this.files.forEach(function(file) {
+      var dest = file.dest;
+      var tasks;
+
+      tasks = file.src.map(function(srcFile) {
+        return function(callback) {
+          encode.stylesheet(srcFile, opts, callback);
+        };
       });
-      } else {
-        done();
-      };
+
+      if(!tasks.length) {
+        grunt.log.writeln('No files found');
+        return done();
+      }
+
+      // Once all files have been processed write them out.
+      grunt.util.async.parallel(tasks, function(err, output) {
+        grunt.file.write(dest, output);
+        grunt.log.writeln('File "' + dest + '" created.');
+
+        // call done() exactly once, after all files are processed
+        if(++doneCount >= filesCount) {
+          done();
+        }
+      });
+    });
   });
 
 };
