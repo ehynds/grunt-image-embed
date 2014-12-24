@@ -38,10 +38,10 @@ module.exports = function(grunt) {
             done();
           }
         });
+      });
       } else {
         done();
       };
-    });
   });
 
 };
