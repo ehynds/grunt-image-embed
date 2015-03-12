@@ -82,11 +82,17 @@ module.exports.stylesheet = function(srcFile, opts, done) {
 
     if(group[4] == null && process) {
       result += group[1];
-
+      
       img = group[3].trim()
       .replace(rQuotes, '') // remove quotation marks
       .replace(rParams, ''); // remove query string/hash parmams in the filename, like foo.png?bar or foo.png#bar
 
+      if (rData.test(img)) {
+        // skip data: urls early
+        result += group[2];
+        return complete();
+      }
+      
       // Throw a warning if this image has already been encoded elsewhere
       // in the stylesheet
       if(cache[img]) {
