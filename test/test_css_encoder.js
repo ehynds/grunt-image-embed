@@ -27,7 +27,7 @@ exports['test css encoding'] = {
   // whether or not they existed.  We could change this behavior based
   // on an option, or maybe retain things to match what the user did.
   //
-  "can encode single url on a line -- no quotes": function(test) {
+  "can encode single url with background-image on a line -- no quotes": function(test) {
     test.expect(1);
     var input = path.join(fixtures, "test_singleurl.css");
     encode.stylesheet(input, function(err, str) {
@@ -36,7 +36,16 @@ exports['test css encoding'] = {
     });
   },
 
-  "can encode single url on a line -- external": function(test) {
+  "can encode single url with background on a line -- no quotes": function(test) {
+    test.expect(1);
+    var input = path.join(fixtures, "test_singleurl_background.css");
+    encode.stylesheet(input, function(err, str) {
+      test.equal(str, "body { background: url(" + encoded_gif + "); }" + linefeed);
+      test.done();
+    });
+  },
+
+  "can encode single url with background-image on a line -- external": function(test) {
     test.expect(1);
     var input = path.join(fixtures, "test_singleurl_external.css");
     encode.stylesheet(input, function(err, str) {
@@ -45,7 +54,16 @@ exports['test css encoding'] = {
     });
   },
 
-  "can encode single url on a line -- scheme less": function(test) {
+  "can encode single url with background on a line -- external": function(test) {
+    test.expect(1);
+    var input = path.join(fixtures, "test_singleurl_background_external.css");
+    encode.stylesheet(input, function(err, str) {
+      test.equal(str, "body { background: url(" + encoded_10x10 + "); }" + linefeed);
+      test.done();
+    });
+  },
+
+  "can encode single url with background-image on a line -- scheme less": function(test) {
     test.expect(1);
     var input = path.join(fixtures, "test_singleurl_schemeless.css");
     encode.stylesheet(input, function(err, str) {
@@ -54,7 +72,16 @@ exports['test css encoding'] = {
     });
   },
 
-  "can encode single url on a line -- with quotes": function(test) {
+  "can encode single url with background on a line -- scheme less": function(test) {
+    test.expect(1);
+    var input = path.join(fixtures, "test_singleurl_background_schemeless.css");
+    encode.stylesheet(input, function(err, str) {
+      test.equal(str, "body { background: url(" + encoded_10x10 + "); }" + linefeed);
+      test.done();
+    });
+  },
+
+  "can encode single url with background-image on a line -- with quotes": function(test) {
     test.expect(1);
     var input = path.join(fixtures, "test_singleurl_withquotes.css");
     encode.stylesheet(input, function(err, str) {
@@ -63,11 +90,29 @@ exports['test css encoding'] = {
     });
   },
 
-  "can encode more than one url on a line": function(test) {
+  "can encode single url with background on a line -- with quotes": function(test) {
+    test.expect(1);
+    var input = path.join(fixtures, "test_singleurl_background_withquotes.css");
+    encode.stylesheet(input, function(err, str) {
+      test.equal(str, "body { background: url(" + encoded_gif + "); }" + linefeed);
+      test.done();
+    });
+  },
+
+  "can encode more than one url with background-image on a line": function(test) {
     test.expect(1);
     var input = path.join(fixtures, "test_multiurl_oneline.css");
     encode.stylesheet(input, function(err, str) {
       test.equal(str, "body { background-image: url(" + encoded_gif + "); background-image: url(" + encoded_gif + "); }" + linefeed);
+      test.done();
+    });
+  },
+
+  "can encode more than one url with background on a line": function(test) {
+    test.expect(1);
+    var input = path.join(fixtures, "test_multiurl_background_oneline.css");
+    encode.stylesheet(input, function(err, str) {
+      test.equal(str, "body { background: url(" + encoded_gif + "); background: url(" + encoded_gif + "); }" + linefeed);
       test.done();
     });
   },
@@ -85,13 +130,47 @@ exports['test css encoding'] = {
     });
   },
 
-  "will skip declarations with \"/*ImageEmbed:skip*/\" appended as comment": function(test) {
+  "will skip font declarations with \"/*ImageEmbed:skip*/\" appended as comment": function(test) {
     var extensions = ['.eot', '.svg'];
     var input = path.join(fixtures, "test_fontface_skip.css");
     test.expect(extensions.length + 1);
 
     encode.stylesheet(input, function(err, str) {
       // Assure none of the URL's have been replaced
+      extensions.forEach(function(extension) {
+        test.notEqual(str.indexOf(extension), -1);
+      });
+
+      // Assure the regular expression isn't too greedy:
+      test.equal(str.indexOf('test.gif'), -1);
+      test.done();
+    });
+  },
+
+  "will skip background declarations with \"/*ImageEmbed:skip*/\" appended as comment": function(test) {
+    var extensions = ['.png'];
+    var input = path.join(fixtures, "test_background_skip.css");
+    test.expect(extensions.length + 1);
+
+    encode.stylesheet(input, function(err, str) {
+      // Assure the URL has not been replaced
+      extensions.forEach(function(extension) {
+        test.notEqual(str.indexOf(extension), -1);
+      });
+
+      // Assure the regular expression isn't too greedy:
+      test.equal(str.indexOf('test.gif'), -1);
+      test.done();
+    });
+  },
+
+  "will skip background declarations with multiple styles with \"/*ImageEmbed:skip*/\" appended as comment": function(test) {
+    var extensions = ['.png'];
+    var input = path.join(fixtures, "test_background_multistyle_skip.css");
+    test.expect(extensions.length + 1);
+
+    encode.stylesheet(input, function(err, str) {
+      // Assure the URL has not been replaced
       extensions.forEach(function(extension) {
         test.notEqual(str.indexOf(extension), -1);
       });
