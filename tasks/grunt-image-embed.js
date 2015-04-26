@@ -12,6 +12,7 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('imageEmbed', 'Embed images as base64 data URIs inside your stylesheets', function() {
     var opts = this.options();
+console.log(opts);
     var done = this.async();
     var filesCount = this.files.length;
     var doneCount = 0;

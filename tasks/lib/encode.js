@@ -167,7 +167,8 @@ exports.image = function(img, opts, done) {
 
   // Set default, helper-specific options
   opts = _.extend({
-    maxImageSize: 32768
+    maxImageSize: 32768,
+    maxImageSizeWarning: false
   }, opts);
 
   /**
@@ -177,6 +178,10 @@ exports.image = function(img, opts, done) {
     // Did the dataURI exceed the max length?
     if(cacheable && encoded && opts.maxImageSize && encoded.length > opts.maxImageSize) {
       err = new Error("Skipping " + img + " (greater than " + opts.maxImageSize + " bytes)");
+
+      if (opts.maxImageSizeWarning) {
+        grunt.log.warn("Skipping " + img + " (greater than " + opts.maxImageSize + " bytes)");
+      }
     }
 
     // Return the original source if an error occurred

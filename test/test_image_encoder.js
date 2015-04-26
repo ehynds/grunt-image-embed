@@ -1,4 +1,6 @@
-var encode = require("../tasks/lib/encode");
+var encode = require("../tasks/lib/encode"),
+    sinon = require('sinon'),
+    grunt = require('grunt');
 
 /*
  ======== A Handy Little Nodeunit Reference ========
@@ -76,6 +78,21 @@ exports['test image encoding'] = {
             test.equal(str, input);
             test.done();
         });
+    },
+
+    "should log a grunt warning if the base64 encoded string is greater than maxImageSize and the maxImageSizeWarning option is true": function (test) {
+        test.expect(1);
+        var input = __dirname + "/css/images/test.gif",
+            options = {
+                maxImageSize: 1,
+                maxImageSizeWarning: true
+            },
+            warnSpy = sinon.spy(grunt.log, 'warn');
+
+        encode.image(input, options, function() {
+
+            test.equal(warnSpy.called, true);
+            test.done();
+        });
     }
 };
-

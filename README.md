@@ -56,6 +56,8 @@ ImageEmbed can be customized by specifying the following options:
 
 * `maxImageSize`: The maximum size of the base64 string in bytes. This defaults to `32768`, or IE8's limit. Set this to `0` to remove the limit and allow any size string.
 
+* `maxImageSizeWarning`: Logs a Grunt warning when an image is not encoded due to the base64 string size in bytes being greater than the maxImageSize option.
+
 * `baseDir`: If you have absolute image paths in your stylesheet, the path specified in this option will be used as the base directory.
 
 * `deleteAfterEncoding`: Set this to true to delete images after they've been encoded. You'll want to do this in a staging area, and not in your source directories.  Be careful.
