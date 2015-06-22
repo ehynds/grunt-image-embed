@@ -78,7 +78,7 @@ module.exports.stylesheet = function(srcFile, opts, done) {
     //    group[4] will hold the entire string
 
     // Will skip processing if file is not included or is excluded
-    var process = group[3] && (group[3].match(rInclude) !== null || group[3].match(rExclude) === null);
+    var process = group[3] && (group[3].match(rInclude) !== null && group[3].match(rExclude) === null);
 
     if(group[4] == null && process) {
       result += group[1];
