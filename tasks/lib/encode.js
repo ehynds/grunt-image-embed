@@ -15,7 +15,7 @@ var fetch = require('./fetch');
 var _ = grunt.util._;
 
 // Cache regex's
-var rImages = /([\s\S]*?)(url\(([^)]+)\))(?!\s*[;,]?\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
+var rImages = /([\s\S]*?)(url\(([^)]+)\))(?![^;]*;\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
 var rExternal = /^http/;
 var rSchemeless = /^\/\//;
 var rData = /^data:/;
