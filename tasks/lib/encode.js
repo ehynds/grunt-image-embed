@@ -65,9 +65,9 @@ module.exports.stylesheet = function(srcFile, opts, done) {
   var result = '';
   var img, group;
 
-  grunt.util.async.whilst(function() {
+  grunt.util.async.whilst(function(cb) {
     group = rImages.exec(src);
-    return group != null;
+    cb(null,group != null);
   }, function(complete) {
     // if there is another url to be processed, then:
     //    group[1] will hold everything up to the url declaration
